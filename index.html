@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Случайная серия</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🎲 Случайная серия</h1>
+
+    <h2>Сериал: СашаТаня</h2>
+
+    <div class="progress">
+        Осталось непросмотренных:
+        <span id="remaining">0</span>
+    </div>
+
+    <div class="episode">
+
+        <div class="label">
+            Выпала серия
+        </div>
+
+        <div id="episodeNumber" class="episode-number">
+            —
+        </div>
+
+    </div>
+
+    <div class="buttons">
+
+        <button id="randomBtn">
+            🎲 Следующая случайная
+        </button>
+
+        <button id="watchedBtn" disabled>
+            ✅ Отметить просмотренной
+        </button>
+
+
+    </div>
+
+    <hr>
+
+    <details>
+
+        <summary>Просмотренные серии</summary>
+
+        <ul id="watchedList"></ul>
+
+    </details>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
