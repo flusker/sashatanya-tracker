@@ -4,14 +4,13 @@ const episodes = [];
 // Все сезоны и количество серий
 const seasons = {
     1: 40,
-    2: 79,
-    3: 120,
-    4: 161,
-    5: 200,
-    6: 240,
-    7: 280,
-    8: 320,
-    9: 360
+    2: 39,
+    3: 40,
+    4: 41,
+    5: 39,
+    6: 40,
+    7: 40,
+    8: 40
 };
 
 
@@ -45,11 +44,11 @@ let watched = [];
 
 const watchedSeasons = {
     1: 40,
-    2: 79,
-    3: 120
+    2: 39
 };
 
 
+// Добавляем полностью просмотренные сезоны 1 и 2
 for (const season in watchedSeasons) {
 
     for (
@@ -67,6 +66,17 @@ for (const season in watchedSeasons) {
     }
 
 }
+// Добавляем 3 сезон до 9 серии
+for (let episode = 1; episode <= 9; episode++) {
+
+    watched.push(
+        "03-" +
+        String(episode).padStart(3, "0")
+    );
+
+}
+
+
 
 
 
@@ -88,7 +98,8 @@ const savedWatched = localStorage.getItem(STORAGE_KEY);
 
 if (savedWatched) {
 
-    watched = JSON.parse(savedWatched);
+    watched = JSON.parse(savedWatched)
+        .filter(ep => episodes.includes(ep));
 
 } else {
 
@@ -173,7 +184,7 @@ function updateUI() {
         });
 
 
-
+    randomBtn.disabled = false;
     if (left.length === 0) {
 
 
