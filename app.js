@@ -1,62 +1,76 @@
-const episodes = [
-    "01-01",
-    "01-02",
-    "01-03",
-    "01-04",
-    "01-05",
-    "01-06",
-    "01-07",
-    "01-08",
-    "01-09",
-    "01-10",
-    "01-11",
-    "01-12",
-    "02-01",
-    "02-02",
-    "02-03",
-    "02-04",
-    "02-05"
-];
+const episodes = [];
+
+
+// Все сезоны и количество серий
+const seasons = {
+    1: 40,
+    2: 79,
+    3: 120,
+    4: 161,
+    5: 200,
+    6: 240,
+    7: 280,
+    8: 320,
+    9: 360
+};
+
+
+// Создаем список всех серий
+for (const season in seasons) {
+
+    for (
+        let episode = 1;
+        episode <= seasons[season];
+        episode++
+    ) {
+
+        episodes.push(
+            String(season).padStart(2, "0") +
+            "-" +
+            String(episode).padStart(3, "0")
+        );
+
+    }
+
+}
+
 
 
 const STORAGE_KEY = "sashatanya_watched";
 
 
-let watched = [
-    "01-01",
-    "01-02",
-    "01-03"
-];
+
+// Первые 3 сезона просмотрены
+let watched = [];
+
+const watchedSeasons = {
+    1: 40,
+    2: 79,
+    3: 120
+};
 
 
-// Загружаем сохранённые просмотренные серии
-const savedWatched = localStorage.getItem(STORAGE_KEY);
+for (const season in watchedSeasons) {
 
-if (savedWatched) {
+    for (
+        let episode = 1;
+        episode <= watchedSeasons[season];
+        episode++
+    ) {
 
-    watched = JSON.parse(savedWatched);
+        watched.push(
+            String(season).padStart(2, "0") +
+            "-" +
+            String(episode).padStart(3, "0")
+        );
 
-} else {
-
-    // первый запуск — сохраняем начальный список
-    saveWatched();
+    }
 
 }
 
 
-let currentEpisode = null;
 
-
-// Элементы страницы
-const episodeNumber = document.getElementById("episodeNumber");
-const remaining = document.getElementById("remaining");
-const watchedList = document.getElementById("watchedList");
-
-const randomBtn = document.getElementById("randomBtn");
-const watchedBtn = document.getElementById("watchedBtn");
-
-
-// Сохранение просмотренных
+// Сохранение просмотренных серий
 function saveWatched() {
 
     localStorage.setItem(
@@ -67,8 +81,61 @@ function saveWatched() {
 }
 
 
+
+// Загружаем сохранение
+const savedWatched = localStorage.getItem(STORAGE_KEY);
+
+
+if (savedWatched) {
+
+    watched = JSON.parse(savedWatched);
+
+} else {
+
+    saveWatched();
+
+}
+
+
+
+let currentEpisode = null;
+
+
+
+// Элементы страницы
+
+const episodeNumber =
+    document.getElementById("episodeNumber");
+
+const remaining =
+    document.getElementById("remaining");
+
+const watchedList =
+    document.getElementById("watchedList");
+
+
+const randomBtn =
+    document.getElementById("randomBtn");
+
+const watchedBtn =
+    document.getElementById("watchedBtn");
+
+
+const addWatchedBtn =
+    document.getElementById("addWatchedBtn");
+
+
+const manualEpisode =
+    document.getElementById("manualEpisode");
+
+
+
+
+
 // Обновление интерфейса
+
 function updateUI() {
+
 
     const left = episodes.filter(
         episode => !watched.includes(episode)
@@ -78,7 +145,9 @@ function updateUI() {
     remaining.textContent = left.length;
 
 
+
     watchedList.innerHTML = "";
+
 
 
     watched
@@ -86,31 +155,48 @@ function updateUI() {
         .sort()
         .forEach(ep => {
 
-            const li = document.createElement("li");
+
+            const li =
+                document.createElement("li");
+
 
             li.textContent =
-                "Сезон " + ep.substring(0, 2) +
-                " Серия " + ep.substring(3);
+                "Сезон " +
+                Number(ep.substring(0, 2)) +
+                " Серия " +
+                Number(ep.substring(3));
+
 
             watchedList.appendChild(li);
+
 
         });
 
 
+
     if (left.length === 0) {
+
 
         episodeNumber.textContent =
             "🎉 Все серии просмотрены";
 
+
         randomBtn.disabled = true;
+
         watchedBtn.disabled = true;
 
+
     }
+
 
 }
 
 
-// Получить случайную серию
+
+
+
+// Случайная серия
+
 randomBtn.onclick = () => {
 
 
@@ -119,47 +205,70 @@ randomBtn.onclick = () => {
     );
 
 
+
     if (left.length === 0) {
+
         return;
+
     }
 
 
+
     const randomEpisode =
-        left[Math.floor(Math.random() * left.length)];
+        left[
+            Math.floor(
+                Math.random() * left.length
+            )
+        ];
+
 
 
     currentEpisode = randomEpisode;
 
 
+
     episodeNumber.textContent =
         "Сезон " +
-        randomEpisode.substring(0, 2) +
-        "   Серия " +
-        randomEpisode.substring(3);
+        Number(randomEpisode.substring(0, 2)) +
+        "\nСерия " +
+        Number(randomEpisode.substring(3));
+
 
 
     watchedBtn.disabled = false;
+
 
 };
 
 
 
-// Отметить просмотренной
+
+
+
+// Отметить текущую серию просмотренной
+
 watchedBtn.onclick = () => {
 
 
     if (!currentEpisode) {
+
         return;
+
     }
+
 
 
     if (!watched.includes(currentEpisode)) {
 
+
         watched.push(currentEpisode);
+
 
         saveWatched();
 
+
     }
+
 
 
     currentEpisode = null;
@@ -173,8 +282,101 @@ watchedBtn.onclick = () => {
 
     updateUI();
 
+
 };
 
 
-// Первый запуск интерфейса
+
+
+
+
+// Добавить просмотренную вручную
+
+addWatchedBtn.onclick = () => {
+
+
+    let episode =
+        manualEpisode.value.trim();
+
+
+
+    if (!episode) {
+
+        return;
+
+    }
+
+
+
+    let parts = episode.split("-");
+
+
+
+    if (parts.length !== 2) {
+
+        alert("Формат: 04-001");
+
+        return;
+
+    }
+
+
+
+    let season =
+        String(Number(parts[0]))
+        .padStart(2, "0");
+
+
+
+    let number =
+        String(Number(parts[1]))
+        .padStart(3, "0");
+
+
+
+    let formatted =
+        season + "-" + number;
+
+
+
+    if (!episodes.includes(formatted)) {
+
+        alert("Такой серии нет");
+
+        return;
+
+    }
+
+
+
+    if (watched.includes(formatted)) {
+
+        alert("Эта серия уже просмотрена");
+
+        return;
+
+    }
+
+
+
+    watched.push(formatted);
+
+
+    saveWatched();
+
+
+    manualEpisode.value = "";
+
+
+    updateUI();
+
+
+};
+
+
+
+
+
+// Запуск
+
 updateUI();

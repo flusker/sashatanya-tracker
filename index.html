@@ -1,63 +1,150 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Случайная серия</title>
+
+    <title>Случайная серия СашаТаня</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
+
+
 <body>
 
 <div class="container">
 
+
     <h1>🎲 Случайная серия</h1>
+
 
     <h2>Сериал: СашаТаня</h2>
 
+
+
     <div class="progress">
+
         Осталось непросмотренных:
+        
         <span id="remaining">0</span>
+
     </div>
 
+
+
+
     <div class="episode">
+
 
         <div class="label">
             Выпала серия
         </div>
 
+
         <div id="episodeNumber" class="episode-number">
             —
         </div>
 
+
     </div>
+
+
+
+
 
     <div class="buttons">
 
+
         <button id="randomBtn">
+
             🎲 Следующая случайная
+
         </button>
 
+
+
         <button id="watchedBtn" disabled>
+
             ✅ Отметить просмотренной
+
         </button>
 
 
     </div>
 
+
+
+
+
+
+    <div class="add-watched">
+
+
+        <h3>
+            Добавить просмотренную вручную
+        </h3>
+
+
+
+        <input
+            id="manualEpisode"
+            placeholder="Например 04-001"
+            maxlength="6"
+        >
+
+
+
+        <button id="addWatchedBtn" type="button">
+
+            ➕ Добавить просмотренную
+
+        </button>
+
+
+
+    </div>
+
+
+
+
+
+
+
     <hr>
+
+
+
+
+
 
     <details>
 
-        <summary>Просмотренные серии</summary>
+
+        <summary>
+            Просмотренные серии
+        </summary>
+
+
 
         <ul id="watchedList"></ul>
 
+
+
     </details>
+
+
+
+
 
 </div>
 
+
+
+
 <script src="app.js"></script>
 
+
 </body>
+
 </html>
